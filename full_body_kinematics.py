@@ -20,17 +20,16 @@ def extract_labels(filename):
 
 
 def create_kinematics_dataframe(kinematics_folder, trial_number, keypoint, rows_of_data_to_skip, planes = ["X", "Y", "Z"]): 
-    """ Extracts kinematic data of keypoint from an OpenSim .sto file.
+    """ Extracts kinematic data of a keypoint from an OpenSim .sto file.
     ----------
     Parameters
-    kinematics_folder: string of the folder containing the kinematics files
+    kinematics_folder: name of the folder containing the kinematics files
     trial_number: string of the trial number to extract
     keypoint: string of the keypoint to extract
     planes: list of strings of the planes to extract (default is ["X", "Y", "Z"] - other choices are ["Ox", "Oy", "Oz"])
-    rows_of_data_to_skip: int of the number of rows to skip in the .sto file - needed if model does not start in correct position (default is 0)
     ----------
     Returns
-    A data frame for that trial with position, velocity and acceleration data for the keypoint in the specified planes
+    A dataframe for that trial with position, velocity and acceleration data for the keypoint in the specified planes
     """
     rows_of_data_to_skip = rows_to_skip
 
@@ -51,6 +50,7 @@ def create_kinematics_dataframe(kinematics_folder, trial_number, keypoint, rows_
                 pos_data_frame = pd.read_csv(filename, sep="\t", skiprows=rows_to_skip, names=labels)  
                 keypoint_data["time"] = pos_data_frame["time"].iloc[rows_of_data_to_skip:]
                 for plane in planes:
+                    # add the values to our dataframe
                     keypoint_data[f"{keypoint}_{plane} (m)"] = pos_data_frame[f"{keypoint}_{plane}"].iloc[rows_of_data_to_skip:]
             #if file contains velocity data
             elif "BodyKinematics_vel_global" in filename: 
@@ -58,6 +58,7 @@ def create_kinematics_dataframe(kinematics_folder, trial_number, keypoint, rows_
                 # Extract the keypoint data
                 vel_data_frame = pd.read_csv(filename, sep="\t", skiprows=rows_to_skip, names=labels)
                 for plane in planes:
+                    # add the values to our dataframe
                     keypoint_data[f"{keypoint}_{plane} (m/s)"] = vel_data_frame[f"{keypoint}_{plane}"].iloc[rows_of_data_to_skip:]
                     time_diff = keypoint_data["time"].diff()
                     keypoint_data[f"{keypoint}_{plane} (m/s^2)"] = keypoint_data[f"{keypoint}_{plane} (m/s)"].diff()/ time_diff            
@@ -79,7 +80,9 @@ def calculate_mech_energies(kinematics_folder, trial_number):
     An updated data frame for that trial with the potential, kinetic and total energy of the keypoint
     """
     rows_of_data_to_skip = rows_to_skip
+    # Create the kinematic dataframe using the function from above 
     kinematics_df = create_kinematics_dataframe(kinematics_folder, trial_number, keypoint, rows_of_data_to_skip)
+    # make sure the dataframe exists
     if kinematics_df is not None:
         #potential_energy = mass * g * height (Y-axis)
         if f"{keypoint}_Y (m)" in kinematics_df.columns:
@@ -92,6 +95,7 @@ def calculate_mech_energies(kinematics_folder, trial_number):
         #print(ke)
         #total energy = pe + ke
         te = pe + ke
+        # change in total energy
         delta_te = te.diff()
 
         #add these energies to our dataframe
