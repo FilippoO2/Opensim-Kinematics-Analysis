@@ -44,9 +44,9 @@ def calculate_distance_covered(kinematics_folder, trial_number, start, end=None,
     Returns
     The distance covered during the specified trial or point in metres.
     """
-    # Have to reset the rows to skip
+    # Have to reset the rows to skip.
     rows_of_data_to_skip = rows_to_skip
-    # Creates the dataframe from which you will calculate distance from 
+    # Creates the dataframe from which you will calculate distance from.
     kinematics_df = create_kinematics_dataframe(kinematics_folder, trial_number, keypoint, rows_of_data_to_skip)
     # Make sure the dataframe is not None - if it is, return 0 as the result.
     if kinematics_df is None:
@@ -57,18 +57,19 @@ def calculate_distance_covered(kinematics_folder, trial_number, start, end=None,
         x_position = kinematics_df[f"{keypoint}_X (m)"]
         y_position = kinematics_df[f"{keypoint}_Y (m)"]
         z_position = kinematics_df[f"{keypoint}_Z (m)"]
-        # if end is None, we have not been given a point and calculate the distance the entire trial
+        # if end is None, we have not been given a point and calculate the distance covered across the entire trial.
         if end is None:
-            #calculate the distance covered by the keypoint
+            #calculate the distance covered by the keypoint across each frame.
             x_diff = x_position.diff()
             y_diff = y_position.diff()
             z_diff = z_position.diff()
-            # Calculate Euclidean distance
+            # Calculate Euclidean distance.
             distance = np.sqrt(x_diff**2 + y_diff**2 + z_diff**2).sum()
-            print(f"Processing data for trial number {trial_number}.")# Calculate differences between consecutive points
+            print(f"Processing data for trial number {trial_number}.")
             return distance
         #if we have been given an end frame but no slice, we calculate the work for that time (usually a point within a trial)
         elif end and not slice_start:
+            # adjust start and end frames
             start, end = adjust_frame_numbers(rows_of_data_to_skip, start, end)
             # Slice the dataframes to the desired range
             x_position_range = x_position.iloc[start:end]
@@ -80,13 +81,13 @@ def calculate_distance_covered(kinematics_folder, trial_number, start, end=None,
             z_diff = z_position_range.diff()
             # Calculate Euclidean distance
             distance = np.sqrt(x_diff**2 + y_diff**2 + z_diff**2).sum()
-            print(f"Processing data for trial number {trial_number}.")# Calculate differences between consecutive points
+            print(f"Processing data for trial number {trial_number}.")
             return distance
-        #if we have a slice point, we use first_end and first_start to slice points within start and end
+        #if we have a slice point, we use slice_start and slice_end to slice points within start and end
         elif slice_start:
+            # Use distance variable to store the distance covered in the two parts
             distance = 0
             start, end, slice_start, slice_end = adjust_frame_numbers(rows_of_data_to_skip, start, end, slice_start, slice_end)
-            #calculate the distance covered by the keypoint
             # Slice the dataframes to the desired range
             x_position_range = x_position.iloc[start:slice_start]
             y_position_range = y_position.iloc[start:slice_start]
@@ -112,12 +113,12 @@ def calculate_distance_covered(kinematics_folder, trial_number, start, end=None,
             print(f"Processing data for trial number {trial_number}.")
             return distance
 
-# If you want to calculate an individual trial, because you are slicing it, you can use the following code
-trial_number = "02"
-start = 0
-end = 500
-slice_start = 0
-slice_end = 60
+# If you want to calculate the distance covered during an individual trial because you are slicing it, you can use the following code:
+# trial_number = "02"
+# start = 0
+# end = 500
+# slice_start = 0
+# slice_end = 60
 
-distance = calculate_distance_covered(kinematics_folder, trial_number, start, end, slice_start, slice_end)
-print(distance)
+# distance = calculate_distance_covered(kinematics_folder, trial_number, start, end, slice_start, slice_end)
+# print(distance)
