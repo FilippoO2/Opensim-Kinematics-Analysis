@@ -23,6 +23,14 @@ def convert_hours_to_seconds(time):
 
 
 def calculate_trimp_score(heart_rates):
+    """ Calculate the TRIMP score for a given list of heart rates
+    --------
+    Parameters
+    heart_rates: list of heart rates
+    --------
+    Returns
+    float of the TRIMP score
+    """
     time_spent_in_zone = {1:0,2:0,3:0,4:0,5:0}
 
     for hr in heart_rates:
@@ -34,6 +42,17 @@ def calculate_trimp_score(heart_rates):
     return trimp_total
 
 def process_files(heart_rate_folder, discipline, start, end):
+    """ Process the heart rate files for a given discipline
+    --------
+    Parameters
+    heart_rate_folder: string of the folder containing the heart rate data
+    discipline: string of the discipline to process
+    start: int of the start frame for the calculation
+    end: int of the end frame for the calculation
+    --------
+    Returns
+    A data frame of the results
+    """
     file_list = os.listdir(os.path.join(heart_rate_folder, discipline))
     results = pd.DataFrame(columns=["File", "Average", "Max", "TRIMP"])
 
@@ -59,10 +78,11 @@ def process_files(heart_rate_folder, discipline, start, end):
 def write_results(results, filename):
     results.to_csv(filename, mode='a', index=False)
 
-heart_rate_folder = "D:/filip/Python/Badminton Data/Heart Rate Data"
+heart_rate_folder = ""
+results_folder = ""
 discipline = "Men's Singles"
 start = 60
 end = 2800
 
 results = process_files(heart_rate_folder, discipline, start, end)
-write_results(results, "D:/filip/Python/Badminton Data/Heart Rate Data/Heart Rate Processed.csv")
+write_results(results, results_folder)
