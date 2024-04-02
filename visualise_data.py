@@ -8,18 +8,19 @@ from point_dict_creator import create_point_dict
 
 def generate_plots_in_loop(kinematics_folder, trial_dict, data_type, file_path):
     """
-    Generate plots for each trial number and store them in a list.
-    
-    Parameters:
-        kinematics_folder (str): Folder containing kinematics files.
-        trial_numbers (list of str): List of trial numbers.
-    
-    Returns:
-        list of matplotlib.pyplot.Figure: List of plots generated for each trial.
+    Generate plots for each trial number and store them in a folder.
+    ---------
+    Parameters
+    kinematics_folder: Folder containing kinematics files.
+    trial_numbers: List of trial numbers - strings
+    --------
+    Returns
+    Folder of plots generated for each point.
     """
     plots = []  # List to store the plots
     rows_of_data_to_skip = rows_to_skip
 
+    #iterate through the trial dict and plot the graphs for the specified metric
     for trial_number in trial_dict:
         trial_num = trial_number[-2:]
         df = calculate_mech_energies(kinematics_folder, trial_num)
