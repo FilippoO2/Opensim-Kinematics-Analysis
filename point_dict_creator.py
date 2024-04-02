@@ -7,12 +7,9 @@ import csv
 from config import csv_file, sheet_name
 
 
-
-
-
 def create_point_dict(csv_file, sheet_name=None):
-    """ Creates a dictionary that contains the points of interest for each trial
-    The dictionary will be used to crop the data to the points of interest
+    """ Creates a dictionary that contains the frame numbers for the points in each trial.
+    The dictionary will be used to crop the data just to the points.
     -------
     Parameters:
     Path to the CSV file containing the points of interest
@@ -51,7 +48,7 @@ def create_point_dict(csv_file, sheet_name=None):
         if pd.isnull(row["Trial"]) or row["Trial"] == "Trial":
             continue
         trial_num = int(row["Trial"])
-        # we have to make sure that the trial number is in the format 01, 02, 03, etc.
+        # the trial number needs to be in the format 01, 02, 03, etc.
         if trial_num < 10:
             trial_num = f"0{trial_num}"
 
@@ -69,7 +66,8 @@ def create_point_dict(csv_file, sheet_name=None):
             break        
         # Check if the trial number is already in the result dictionary
         if trial_num not in trial_dict:
-            trial_dict[trial_num] = {}  # If not, add the trial number as a key with an empty dictionary as its value
+            # If not, add the trial number as a key with an empty dictionary as its value
+            trial_dict[trial_num] = {}
 
         # Add the point number and its corresponding frame pair to the trial
         trial_dict[trial_num][point_num] = frame_pair
