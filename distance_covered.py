@@ -3,7 +3,23 @@ import numpy as np
 from full_body_kinematics import create_kinematics_dataframe
 from config import kinematics_folder, keypoint, rows_to_skip, participant_mass, csv_file, sheet_name
 
+
 def adjust_frame_numbers(rows_of_data_to_skip, start, end, slice_start=None, slice_end=None):
+    """ Adjusts the frame numbers to account for the rows of data to skip and makes sure frame numbers are not negative.
+    ----------
+    Parameters
+    rows_of_data_to_skip: int of the number of rows to skip in the data
+    start: int of the start frame for the calculation
+    end: int of the end frame for the calculation
+    slice_start: int of the frame to begin a slice of data (default is None)
+    slice_end: int of the frame to end a slice of data (default is None)
+    ----------
+    Returns
+    start: int of the adjusted start frame
+    end: int of the adjusted end frame
+    slice_start: int of the adjusted frame to begin a slice of data
+    slice_end: int of the adjusted frame to end a slice of data
+    """
     if start - rows_of_data_to_skip <= 0:
         start = 1
     else:
@@ -16,28 +32,32 @@ def adjust_frame_numbers(rows_of_data_to_skip, start, end, slice_start=None, sli
     return start, end
 
 def calculate_distance_covered(kinematics_folder, trial_number, start, end=None, slice_start=None, slice_end=None):
-    """ Calculates the negative and positive external mechanical works.
+    """ Calculates the distance covered over the specified time.
     ----------
     Parameters
     trial_number: string of the trial number to extract
-    start: int of the start frame for the calculation (default is None)
+    start: int of the start frame for the calculation
     end: int of the end frame for the calculation (default is None)
     first_end: int of the frame to begin a slice of data (default is None)
     first_start: int of the frame to end a slice of data (default is None)
     ----------
     Returns
-    An updated data frame for that trial with the negative and positive external mechanical works
+    The distance covered during the specified trial or point in metres.
     """
+    # Have to reset the rows to skip
     rows_of_data_to_skip = rows_to_skip
+    # Creates the dataframe from which you will calculate distance from 
     kinematics_df = create_kinematics_dataframe(kinematics_folder, trial_number, keypoint, rows_of_data_to_skip)
+    # Make sure the dataframe is not None - if it is, return 0 as the result.
     if kinematics_df is None:
         print(f"No data for Trial Number {trial_number}. Skipping...")
         return 0
     else:
+        # Extract the position of the keypoint in each axis 
         x_position = kinematics_df[f"{keypoint}_X (m)"]
         y_position = kinematics_df[f"{keypoint}_Y (m)"]
         z_position = kinematics_df[f"{keypoint}_Z (m)"]
-        # if end is None, we have not been given a point and calculate the work for the entire trial
+        # if end is None, we have not been given a point and calculate the distance the entire trial
         if end is None:
             #calculate the distance covered by the keypoint
             x_diff = x_position.diff()
