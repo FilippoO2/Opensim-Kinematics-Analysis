@@ -21,6 +21,7 @@ def calculate_player_load_vectorized(x_acc, y_acc, z_acc, start, end, slice_star
     Returns
     A player load value of the player load across that point
     """
+    # if slice start is none, calculate the player load from point start to end 
     if slice_start is None:
         x_diff = x_acc[start:end-1].values - x_acc[start+1:end].values
         y_diff = y_acc[start:end-1].values - y_acc[start+1:end].values
@@ -28,6 +29,7 @@ def calculate_player_load_vectorized(x_acc, y_acc, z_acc, start, end, slice_star
         player_load = np.sqrt((x_diff**2 + y_diff**2 + z_diff**2)/100).sum()
     
     elif slice_start is not None and slice_end is not None:
+        # if there is a slice, calculate the player load on either side and sum them
         x_diff = x_acc[start:slice_start-1].values - x_acc[start+1:slice_start].values
         y_diff = y_acc[start:slice_start-1].values - y_acc[start+1:slice_start].values
         z_diff = z_acc[start:slice_start-1].values - z_acc[start+1:slice_start].values
@@ -66,6 +68,7 @@ def calculate_player_load(kinematics_folder, trial_number, start, end=None, slic
             print(f"Processing data for trial number {trial_number}.")
             return player_load
         elif end and not slice_start:
+            #adjust frame numers to accomadate for skipped rows
             if start - rows_of_data_to_skip <= 0:
                 start = 1
             else:
@@ -77,7 +80,7 @@ def calculate_player_load(kinematics_folder, trial_number, start, end=None, slic
             print(f"Processing data for trial number {trial_number}.")
             return player_load
         elif slice_start:
-            #we cannot start from a negative number so must begin start at 0 
+            #start cannot be less than 1
             if start - rows_of_data_to_skip <= 0:
                 start = 1
             else:
@@ -92,11 +95,11 @@ def calculate_player_load(kinematics_folder, trial_number, start, end=None, slic
             return player_load
 
 #if you want to calculate an individual trial, because you are slicing it up, you can use the following code
-trial_number = "02"
-start = 0
-end = 500
-slice_start = 1
-slice_end = 60
+# trial_number = "02"
+# start = 0
+# end = 500
+# slice_start = 1
+# slice_end = 60
 
-player_load = calculate_player_load(kinematics_folder, trial_number, start, end, slice_start, slice_end)
-print(player_load)
+# player_load = calculate_player_load(kinematics_folder, trial_number, start, end, slice_start, slice_end)
+# print(player_load)
