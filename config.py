@@ -1,6 +1,6 @@
 import os
 
-# The variables you need to change:
+# The variables you need to change in order to run all other files:
 
 # The keypoint of interest e.g. ("center_of_mass")
 keypoint = 
