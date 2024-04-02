@@ -16,7 +16,7 @@ def calculate_external_mechanical_work(kinematics_folder, trial_number, start, e
     ----------
     Parameters
     trial_number: string of the trial number to extract
-    start: int of the start frame for the calculation (default is None)
+    start: int of the start frame for the calculation
     end: int of the end frame for the calculation (default is None)
     first_end: int of the frame to begin a slice of data (default is None)
     first_start: int of the frame to end a slice of data (default is None)
@@ -24,13 +24,16 @@ def calculate_external_mechanical_work(kinematics_folder, trial_number, start, e
     Returns
     An updated data frame for that trial with the negative and positive external mechanical works
     """
+    # check the kinematics dataframe for this trial exists 
     kinematics_df = calculate_mech_energies(kinematics_folder, trial_number)
     if kinematics_df is None:
         print(f"No data for Trial Number {trial_number}. Skipping...")
         return 0,0
     else:
+        # assign the change in total energy column to a variable
         delta_te = kinematics_df["Change in Total Energy (J)"]
         rows_of_data_to_skip = rows_to_skip
+        # collect all negative and positive changes in total energy. 
         delta_te_negative = delta_te < 0
         delta_te_positive = delta_te > 0
         # if end is None, we have not been given a point and calculate the work for the entire trial
@@ -44,7 +47,7 @@ def calculate_external_mechanical_work(kinematics_folder, trial_number, start, e
         #if we have been given an end frame but no slice, we calculate the work for that time (usually a point within a trial)
         elif end and not slice_start:
             #because we have skipped rows, we need to adjust the start and end frames
-            #we cannot start from a negative number so must begin start at 0 
+            # start must be a minimum of 1
             if start - rows_of_data_to_skip <= 0:
                 start = 1
             else:
@@ -58,7 +61,7 @@ def calculate_external_mechanical_work(kinematics_folder, trial_number, start, e
             return negative_work, positive_work
         #if we have a slice point, we use first_end and first_start to slice points within start and end
         elif slice_start:
-            #we cannot start from a negative number so must begin start at 0 
+            # start must be a minimum of 1
             if start - rows_of_data_to_skip <= 0:
                 start = 1
             else:
@@ -77,13 +80,13 @@ def calculate_external_mechanical_work(kinematics_folder, trial_number, start, e
             return 0,0
 
 # If you want to calculate an individual trial, because you are slicing it up, you can use the following code
-trial_number = "02"
-start = 0
-end = 500
-slice_start = 1
-slice_end = 60
+# trial_number = "02"
+# start = 0
+# end = 500
+# slice_start = 1
+# slice_end = 60
 
 
-negative_work, positive_work = calculate_external_mechanical_work(kinematics_folder, trial_number, start, end, slice_start, slice_end)
-print(negative_work, positive_work)
+# negative_work, positive_work = calculate_external_mechanical_work(kinematics_folder, trial_number, start, end, slice_start, slice_end)
+# print(negative_work, positive_work)
 
