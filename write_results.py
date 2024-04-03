@@ -96,9 +96,6 @@ def write_metric_to_csv(kinematics_folder, trial_dict, metric, rows_to_skip = 50
 trial_dict = point_dict_creator.create_point_dict(csv_file, sheet_name) 
 
 #Example use of extracting EMW, Distance Covered and Player Load from all points from one participant 
-# write_metric_to_csv(kinematics_folder, trial_dict, "Work Done")
 for metric in ["Distance Covered", "Player Load", "Work Done"]:
     write_metric_to_csv(kinematics_folder, trial_dict, metric)
 
-
-# write_metric_to_csv(kinematics_folder, trial_dict, "Player Load")
