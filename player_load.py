@@ -42,6 +42,7 @@ def calculate_player_load_vectorized(x_acc, y_acc, z_acc, start, end, slice_star
     
     return player_load
 
+
 def calculate_player_load(kinematics_folder, trial_number, start, end=None, slice_start=None, slice_end=None):
     """ Calculates the player load across the duration of a trial or point.
     ----------
