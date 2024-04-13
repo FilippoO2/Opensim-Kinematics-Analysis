@@ -65,8 +65,6 @@ def create_kinematics_dataframe(kinematics_folder, trial_number, keypoint, rows_
             else:
                 pass       
         return keypoint_data
-   
-
 
 #calculate potential and kinetic energy of the keypoint
 def calculate_mech_energies(kinematics_folder, trial_number):
