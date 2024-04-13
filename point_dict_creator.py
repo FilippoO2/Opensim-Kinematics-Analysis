@@ -77,4 +77,5 @@ def create_point_dict(csv_file, sheet_name=None):
         last_end_frame = end_frame
     return trial_dict
 
-print(create_point_dict(csv_file, sheet_name))
+# to check a dictionary is correct you can use:
+#print(create_point_dict(csv_file, sheet_name))
