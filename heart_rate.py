@@ -14,6 +14,7 @@ zones_coefficients = [
     (0.9*hr_max,1*hr_max,5),
 ]
 
+
 def convert_hours_to_seconds(time):
     time = time.split(":")
     hours = int(time[0])
@@ -40,6 +41,7 @@ def calculate_trimp_score(heart_rates):
 
     trimp_total = sum(key*val for key, val in time_spent_in_zone.items()) / 60
     return trimp_total
+
 
 def process_files(heart_rate_folder, discipline, start, end):
     """ Process the heart rate files for a given discipline
@@ -75,10 +77,12 @@ def process_files(heart_rate_folder, discipline, start, end):
 
     return results
 
+
 def write_results(results, filename):
     results.to_csv(filename, mode='a', index=False)
 
-heart_rate_folder = ""
+
+
 results_folder = ""
 discipline = "Men's Singles"
 start = 60
