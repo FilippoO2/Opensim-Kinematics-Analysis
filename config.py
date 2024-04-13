@@ -1,6 +1,6 @@
 import os
 
-# The variables you need to change in order to run all other files:
+# The variables you need to change in order to run all other files
 
 # The keypoint of interest e.g. ("center_of_mass")
 keypoint = 
@@ -21,7 +21,7 @@ kinematics_folder = f"......{participant}/trc_hrnet/kinematics"
 #Where you want to write the extracted metrics to
 data_path = f"......{participant}"
 
-# Path where you want to save plots (inside P01 directory)
+# Path where you want to save plots (inside participant directory)
 plot_path = f"......{participant}/plots"
 
 #Type of data to plot - Can be ["Position", "Velocity", "Acceleration" or "Energy"]
