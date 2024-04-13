@@ -1,8 +1,9 @@
 # kinematic_analysis
+
 Kinematic analysis of data from OpenSim .sto files
-- Extracts distance covered, 'player load' and external mechanical work from points within trials.
+- Extracts distance covered, 'player load' and external mechanical work of a keypoint (e.g. centre of mass) for a specified time frame within a trial (e.g. a rally within a match).
 - Analyses heart rate data. 
-- Provides visualisations of kinematics.
+- Provides visualisations of key point kinematics.
 
 How the package works:
 
