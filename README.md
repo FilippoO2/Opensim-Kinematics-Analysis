@@ -1,7 +1,7 @@
 # kinematic_analysis
 Kinematic analysis of data from OpenSim .sto files
 - Extracts distance covered, 'player load' and external mechanical work from points within trials.
-- Analyses heart rate data.
+- Analyses heart rate data. 
 - Provides visualisations of kinematics.
 
 How the package works:
