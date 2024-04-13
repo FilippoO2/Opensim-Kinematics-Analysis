@@ -122,4 +122,5 @@ trial_dict = create_point_dict(csv_file, sheet_name)
 plot_data_path = os.path.join(plot_path, plot_data)
 os.makedirs(plot_data_path, exist_ok=True)
 
+# run plot function
 all_plots = generate_plots_in_loop(kinematics_folder, trial_dict, plot_data, plot_data_path)
