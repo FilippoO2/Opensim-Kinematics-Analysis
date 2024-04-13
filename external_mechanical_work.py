@@ -9,8 +9,6 @@ from full_body_kinematics import calculate_mech_energies
 from config import kinematics_folder, keypoint, rows_to_skip, participant_mass, csv_file, sheet_name
 
 
-
-
 def calculate_external_mechanical_work(kinematics_folder, trial_number, start, end=None, slice_start=None, slice_end=None):
     """ Calculates the negative and positive external mechanical works.
     ----------
@@ -85,7 +83,6 @@ def calculate_external_mechanical_work(kinematics_folder, trial_number, start, e
 # end = 500
 # slice_start = 1
 # slice_end = 60
-
 
 # negative_work, positive_work = calculate_external_mechanical_work(kinematics_folder, trial_number, start, end, slice_start, slice_end)
 # print(negative_work, positive_work)
