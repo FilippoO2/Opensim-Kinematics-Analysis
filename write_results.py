@@ -10,7 +10,6 @@ from player_load import calculate_player_load
 from config import kinematics_folder, keypoint, rows_to_skip, participant_mass, csv_file, sheet_name, data_path
 
 
-
 def extract_metric_for_each_point(kinematics_folder, trial_dict, metric = "Work Done"):
     """ Extracts the negative and positive work for each point in a dictionary.
     ----------
@@ -43,7 +42,6 @@ def extract_metric_for_each_point(kinematics_folder, trial_dict, metric = "Work 
             else:
                 print("Error: Maybe you didn't type the metric correctly. Options are: 'Work Done', 'Distance Covered' or 'Player Load'.")
     return metric_dict
-        
 
 
 def write_metric_to_csv(kinematics_folder, trial_dict, metric, rows_to_skip = 50):
