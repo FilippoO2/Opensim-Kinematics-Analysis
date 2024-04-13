@@ -1,4 +1,4 @@
-# kinematic_analysis
+# OpenSim Kinematics Analysis
 
 Kinematic analysis of data from OpenSim .sto files
 - Extracts distance covered, 'player load' and external mechanical work of a keypoint (e.g. centre of mass) for a specified time frame within a trial (e.g. a rally within a match).
