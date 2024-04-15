@@ -9,7 +9,7 @@ How the package works:
 
 config.py - where you set the variables needed to run the package.
 
-point_dict_creator.py - Reads an Excel file containing the point start and end frames within a trial. This is used to crop data so that measurements are made for movement during points only.
+point_dict_creator.py - Reads an Excel file containing the start and end frames within a trial. This is used to crop data so that measurements are made for movement during points only.
 
 full_body_kinematics.py - creates a pandas dataframe for the trial of interest using the associated position and velocity .sto files. Resultant velocity, accelerations and energies are calculated and added to the dataframe.
 
