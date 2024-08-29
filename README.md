@@ -24,3 +24,8 @@ heart_rate.py - Reads a csv containing heart rate data, calculates the average, 
 write_results.py - Writes the results to csv files that are stored in a specified folder.
 
 visualise_data.py - Can be used to visualise a plot for each point. Is able to plot position, velocity, acceleration or mechanical energy.
+
+**To run this code:**
+
+1. Setup your config file, ensuring that all required files are in the correct format.
+2. Run write_results.py
