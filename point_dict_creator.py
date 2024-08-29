@@ -15,7 +15,7 @@ def create_point_dict(csv_file, sheet_name=None):
     Path to the CSV file containing the points of interest
     Name of sheet if in an Excel Workbook
     -------
-    Required CSV file headers and format:
+    Required CSV file headers and format example:
     Trial, Point, Point Start Frame, Point End Frame
     01, 1, 0, 2952
     01, 2, 4000, 5603
